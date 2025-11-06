@@ -5,7 +5,7 @@ RUN adduser -D -u 1001 appuser && \
     chown -R appuser:appuser /var/cache/nginx && \
     chmod -R 755 /var/cache/nginx
 
-# Copy website files
+# Copy website files......
 COPY index.html /usr/share/nginx/html/
 COPY css/ /usr/share/nginx/html/css/
 COPY js/ /usr/share/nginx/html/js/
