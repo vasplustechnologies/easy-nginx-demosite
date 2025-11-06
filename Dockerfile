@@ -10,9 +10,8 @@ COPY index.html /usr/share/nginx/html/
 COPY css/ /usr/share/nginx/html/css/
 COPY js/ /usr/share/nginx/html/js/
 
-# Only copy images if they exist
+# Create images directory (empty if no images exist)
 RUN mkdir -p /usr/share/nginx/html/images/
-COPY images/ /usr/share/nginx/html/images/ 2>/dev/null || echo "Images directory not found, continuing..."
 
 # Security headers configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
