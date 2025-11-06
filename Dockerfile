@@ -3,7 +3,6 @@ FROM nginx:1.23-alpine
 # Security: Run as non-root user
 RUN adduser -D -u 1001 appuser && \
     chown -R appuser:appuser /var/cache/nginx && \
-    chown -R appuser:appuser /var/run && \
     chmod -R 755 /var/cache/nginx
 
 # Copy website files
