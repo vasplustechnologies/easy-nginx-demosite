@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Nginx Demo Site</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Easy Nginx Demo Site</h1>
+            <p>Powered by DevSecOps Pipeline</p>
+        </header>
+        
+        <main>
+            <section class="hero">
+                <h2>Welcome to Our Demo Site</h2>
+                <p>This site is automatically deployed using Argo Workflows and GitOps!</p>
+                <div class="features">
+                    <div class="feature">
+                        <h3>✅ Automated Builds</h3>
+                        <p>Every commit triggers a new build</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🔒 Security Scans</h3>
+                        <p>SAST, DAST, and container security</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🚀 Auto Deployment</h3>
+                        <p>Automatic deployment to Kubernetes</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="status">
+                <h3>Deployment Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Build Date:</label>
+                        <span id="build-date">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Git SHA:</label>
+                        <span id="git-sha">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Environment:</label>
+                        <span id="environment">Production</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Built with ❤️ using Argo Workflows & GitOps</p>
+        </footer>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
