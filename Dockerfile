@@ -5,12 +5,12 @@ RUN adduser -D -u 1001 appuser && \
     chown -R appuser:appuser /var/cache/nginx && \
     chmod -R 755 /var/cache/nginx
 
-# Copy website files......
+# Copy website files
 COPY index.html /usr/share/nginx/html/
 COPY css/ /usr/share/nginx/html/css/
 COPY js/ /usr/share/nginx/html/js/
 
-# Create images directory (empty if no images exist)
+# Create images directory
 RUN mkdir -p /usr/share/nginx/html/images/
 
 # Security headers configuration
@@ -19,6 +19,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Switch to non-root user
 USER appuser
 
+# Expose port
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# Fix: Use a writable location for the PID file
+CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
