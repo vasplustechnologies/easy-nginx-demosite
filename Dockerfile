@@ -19,6 +19,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Switch to non-root user
 USER appuser
 
-EXPOSE 80
+EXPOSE 8088
 
 CMD ["nginx", "-g", "daemon off;"]
