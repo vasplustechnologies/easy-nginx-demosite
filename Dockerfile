@@ -1,28 +1,26 @@
-FROM nginx:1.23-alpine
+FROM node:18-alpine
 
-# Security: Run as non-root user
-RUN adduser -D -u 1001 appuser && \
-    chown -R appuser:appuser /var/cache/nginx && \
-    mkdir -p /var/run/nginx && \
-    chown -R appuser:appuser /var/run/nginx && \
-    chmod -R 755 /var/cache/nginx
+WORKDIR /app
 
-# Copy website files
-COPY index.html /usr/share/nginx/html/
-COPY css/ /usr/share/nginx/html/css/
-COPY js/ /usr/share/nginx/html/js/
+# Copy package files
+COPY package*.json ./
 
-# Create images directory
-RUN mkdir -p /usr/share/nginx/html/images/
+# Install dependencies
+RUN npm install --production
 
-# Security headers configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy application code
+COPY server.js .
+
+# Create non-root user
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -S appuser -u 1001 -G appgroup
+
+# Change ownership
+RUN chown -R appuser:appgroup /app
 
 # Switch to non-root user
 USER appuser
 
-# Expose port
-EXPOSE 80
+EXPOSE 3000
 
-# FIXED: Use the default nginx command
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
