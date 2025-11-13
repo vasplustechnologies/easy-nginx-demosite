@@ -3,7 +3,13 @@ FROM nginx:1.23-alpine
 # Security: Run as non-root user
 RUN adduser -D -u 1001 appuser && \
     chown -R appuser:appuser /var/cache/nginx && \
+    mkdir -p /var/run/nginx && \
+    chown -R appuser:appuser /var/run/nginx && \
     chmod -R 755 /var/cache/nginx
+
+# Add this to your RUN commands:
+RUN mkdir -p /var/run/nginx && \
+    chown -R appuser:appuser /var/run/nginx
 
 # Copy website files
 COPY index.html /usr/share/nginx/html/
@@ -21,6 +27,8 @@ USER appuser
 
 # Expose port
 EXPOSE 80
+
+
 
 # Fix: Use a writable location for the PID file
 # CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
