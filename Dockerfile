@@ -7,10 +7,6 @@ RUN adduser -D -u 1001 appuser && \
     chown -R appuser:appuser /var/run/nginx && \
     chmod -R 755 /var/cache/nginx
 
-# Add this to your RUN commands:
-RUN mkdir -p /var/run/nginx && \
-    chown -R appuser:appuser /var/run/nginx
-
 # Copy website files
 COPY index.html /usr/share/nginx/html/
 COPY css/ /usr/share/nginx/html/css/
@@ -28,8 +24,5 @@ USER appuser
 # Expose port
 EXPOSE 80
 
-
-
-# Fix: Use a writable location for the PID file
-# CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
+# FIXED: Use the default nginx command
 CMD ["nginx", "-g", "daemon off;"]
