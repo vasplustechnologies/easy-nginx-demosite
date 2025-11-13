@@ -23,4 +23,5 @@ USER appuser
 EXPOSE 80
 
 # Fix: Use a writable location for the PID file
-CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
+# CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
