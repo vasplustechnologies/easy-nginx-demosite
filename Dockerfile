@@ -1,28 +1,31 @@
+# Use official Nginx Alpine image as base
 FROM nginx:1.23-alpine
 
-# Create non-root user
+# Create app user with UID 1001
 RUN adduser -D -u 1001 appuser
 
-# Fix all required nginx permissions
-RUN mkdir -p /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/html/images && \
-    chown -R appuser:appuser \
-        /var/cache/nginx \
-        /var/run \
-        /var/log/nginx \
-        /etc/nginx \
-        /usr/share/nginx/html
+# Create directories needed by Nginx and your app
+RUN mkdir -p /var/cache/nginx \
+    /var/log/nginx \
+    /usr/share/nginx/html/images
 
-# Copy website files
-COPY index.html /usr/share/nginx/html/
-COPY css/ /usr/share/nginx/html/css/
-COPY js/ /usr/share/nginx/html/js/
+# Change ownership only for directories we control
+RUN chown -R appuser:appuser \
+    /var/cache/nginx \
+    /var/log/nginx \
+    /usr/share/nginx/html
 
-# Copy nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy your website files (if any)
+COPY ./html/ /usr/share/nginx/html/
 
-# Switch to non-root user
+# Replace default Nginx port with 8088
+RUN sed -i 's/listen       80;/listen       8088;/g' /etc/nginx/conf.d/default.conf
+
+# Switch to the unprivileged user
 USER appuser
 
+# Expose the new port
 EXPOSE 8088
 
+# Start Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
